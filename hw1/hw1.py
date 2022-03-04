@@ -58,7 +58,7 @@ def show_result(x, error, method='LSE'):
     if (method == 'LSE'):
         print("LSE:")
     elif (method == 'Newton'):
-        print("Newton's Mwthod:")
+        print("Newton's Method:")
     print("Fitting line:", end=' ')
     for i in range(x.shape[0] - 1):
         print('{}x^{}'.format(x[i][0], x.shape[0] - i - 1), end=' ')
@@ -118,24 +118,24 @@ def get_array_from_file(input, n):
 
 def show_plot(b, dots, formula_LSE, formula_Newton, n):
     x = np.arange(int(min(dots)-1), int(max(dots)+2))
-    s_LSE=[0]
-    s_Newton=[0]
+    LSE=[0]
+    Newton=[0]
 
     # formula to points
     for i in range(n):
-        s_LSE += formula_LSE[i]*(x**(n-i-1))
-        s_Newton += formula_Newton[i]*(x**(n-i-1))
+        LSE += formula_LSE[i]*(x**(n-i-1))
+        Newton += formula_Newton[i]*(x**(n-i-1))
     
     plt.figure('HW1')
 
     plt.subplot(211)
     plt.scatter(dots, b, c='r', edgecolors='k')
-    plt.plot(x,s_LSE, c='k')
+    plt.plot(x,LSE, c='k')
     # plt.xlim(min(x),max(x))
     
     plt.subplot(212)
     plt.scatter(dots, b, c='r', edgecolors='k')
-    plt.plot(x, s_Newton, c='k')
+    plt.plot(x, Newton, c='k')
     # plt.xlim(min(x),max(x))
     plt.show()
 
