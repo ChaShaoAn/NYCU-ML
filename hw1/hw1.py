@@ -82,15 +82,18 @@ def LSE(A, b, lamb):
     return x
 
 def Newton(A, b, iter=10):
-    AtA = product(transpose(A), A)
-    AtA_inv = inverse(AtA)
+    # H = 2*A^tA
+    H = product(transpose(A), A) * 2
+    H_inv = inverse(H)
     Atb = product(transpose(A), b)
 
     np.random.seed(0)
     x = np.random.rand(A.shape[1],1)
     for i in range(iter):
-        gradient = product(AtA, x) - Atb
-        step = product(AtA_inv, gradient)
+        # delta = 2A^tAx - 2A^tb
+        gradient = product(H, x) - Atb * 2
+        # x_n+1 = x_n - H^-1 * delta
+        step = product(H_inv, gradient)
         x = x - step
     error = product(A, x) - b
     error = product(transpose(error), error)
