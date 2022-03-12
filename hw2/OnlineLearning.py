@@ -1,6 +1,4 @@
 import argparse
-import numpy as np
-import math
 
 
 def C(N, m):
