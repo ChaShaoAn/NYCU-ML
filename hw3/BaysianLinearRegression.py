@@ -97,6 +97,7 @@ def BayesianLinearRegression(b, n, a, w):
         x, y = Polynomial_basis_linear_model_generator(n, 1/a, w)
         X.append(x)
         Y.append(y)
+        # [1 x^1 x^2 x^3]
         dx = designMatrix(x, n)
         count += 1
 
