@@ -100,9 +100,11 @@ def BayesianLinearRegression(b, n, a, w):
         dx = designMatrix(x, n)
         count += 1
 
+        # P(W|D)
         post_cov = a * dx.T.dot(dx) + prior_cov # Λ = aX^TX+Λ, for first time: Λ = aX^TX+bI
         post_m = np.linalg.inv(post_cov).dot(a * dx.T.dot([[y]]) + prior_cov.dot(prior_m))  # μ = C^-1(aX^TY+Λμ), 第一次的時候為 μ = aΛ^-1X^TY，但其實也沒差，因為C^-1Λμ是0
 
+        # P(Y|D) = N(μ^t*X^T, 1/a + X*Λ^-1*X^T)
         new_m = post_m.T.dot(dx.T)
         new_cov = 1/a + (dx.dot(np.linalg.inv(post_cov))).dot(dx.T)
 
