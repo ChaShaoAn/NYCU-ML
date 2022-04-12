@@ -4,6 +4,7 @@ import numpy as np
 
 def univariate_gaussian_data_generator(m, s):
     # central limit theorem
+    # X = μ + σZ
     # generate 12 uniform U(0,1) deviates, add them all up, and subtract 6 – the resulting random variable will have approximately standard normal distribution.
     return m + s**0.5 * (sum(np.random.uniform(0, 1, 12)) - 6)
 
