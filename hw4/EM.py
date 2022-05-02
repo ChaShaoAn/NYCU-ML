@@ -40,7 +40,7 @@ def AssignLabel(X, labels, LAMBDA, P):
     return mapping
 
 
-def PrintImagination(P, mapping, labeled):
+def PrintClass(P, mapping, labeled):
     for i in range(10):
         if labeled:
             print('labeled ', end='')
@@ -58,6 +58,7 @@ def PrintImagination(P, mapping, labeled):
 def CalculateCofusionMatrix(X, labels, LAMBDA, P, mapping):
     mapping_inverse = np.zeros((10), dtype=np.int32)
     for i in range(10):
+        # 將mapping反過來，原本mapping是哪個label對應到哪個class，這裡用成哪個class對應到哪個label
         mapping_inverse[i] = np.where(mapping == i)[0][0]
     confusion_matrix = np.zeros((10, 2, 2))
     for i in range(train_num):
@@ -197,15 +198,16 @@ if __name__ == '__main__':
         '''
         
         delta = sum(sum(abs(p - p_last)))
-        PrintImagination(p, mapping, False)
+        PrintClass(p, mapping, False)
         print(f"No. of Iteration: {count}, Difference: {delta}\n")
         print("--------------------------------------------------------")
 
 
-        if (delta <= 5 and count >= 10 and sum(lamb) >= 0.95):
+        # if (delta <= 5 and count >= 10):
+        if (delta <= 5 or count >= 20):
             break
     
     print('------------------------------------------------------------\n')
     mapping = AssignLabel(train_imgs, train_lbs, lamb, p)
-    PrintImagination(p, mapping, True)
+    PrintClass(p, mapping, True)
     PrintResult(train_imgs, train_lbs, lamb, p, mapping, count)
